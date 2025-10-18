@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño de Casa - Exterior e Interior</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .intro h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #ddd;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        @media (min-width: 1200px) {
+            .comparison {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(102,126,234,0.3);
+        }
+        
+        .card h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        
+        .card-content {
+            color: #ddd;
+        }
+        
+        .card-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-box {
+            background: rgba(102,126,234,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-box:hover {
+            background: rgba(102,126,234,0.2);
+            transform: translateX(5px);
+        }
+        
+        .feature-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .feature-box p {
+            color: #ccc;
+            font-size: 0.95em;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: rgba(102,126,234,0.1);
+            border-radius: 20px;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        footer {
+            background: #0f0f1e;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-badge {
+            background: rgba(102,126,234,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏠 Diseño de Casa Completo</h1>
+        <p>Del Exterior al Interior - Plano Arquitectónico Profesional</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>Proyecto de Diseño Arquitectónico</h2>
+            <p>
+                Este proyecto presenta un diseño arquitectónico completo basado en la foto exterior de una casa moderna de una planta. 
+                Se ha creado un plano interior detallado que respeta y complementa perfectamente la distribución visible desde el exterior, 
+                incluyendo la ubicación del garaje, las ventanas, la entrada principal y las proporciones generales del edificio.
+            </p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">180</span>
+                <span class="stat-label">m² Totales</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Dormitorios</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">2</span>
+                <span class="stat-label">Baños</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">8</span>
+                <span class="stat-label">Ambientes</span>
+            </div>
+        </div>
+        
+        <div class="comparison">
+            <div class="card">
+                <h3>🏡 Vista Exterior</h3>
+                <img src="1760751150326.jpg" alt="Exterior de la casa">
+                <div class="card-content">
+                    <p><strong>Características Visibles:</strong></p>
+                    <ul style="list-style-position: inside; color: #ddd;">
+                        <li>Diseño moderno de una planta</li>
+                        <li>Techo de tejas de terracota</li>
+                        <li>Paredes de estuco gris/beige</li>
+                        <li>Entrada principal central con puerta de madera</li>
+                        <li>Ventanas simétricas a ambos lados de la entrada</li>
+                        <li>Garaje/carport en el lado izquierdo</li>
+                        <li>Estilo contemporáneo minimalista</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>📐 Plano Interior</h3>
+                <object data="plano-interior.svg" type="image/svg+xml" style="width: 100%; height: auto; background: white; border-radius: 10px;">
+                    <img src="plano-interior.svg" alt="Plano Interior">
+                </object>
+                <div class="card-content">
+                    <p><strong>Distribución de Espacios:</strong></p>
+                    <ul style="list-style-position: inside; color: #ddd;">
+                        <li>Garaje con acceso interno (5.5m × 5.5m)</li>
+                        <li>Sala de estar amplia (7.3m × 5.5m)</li>
+                        <li>Cocina y comedor integrados (7.3m × 5.5m)</li>
+                        <li>Dormitorio 1 (5.5m × 5.5m)</li>
+                        <li>Dormitorio 2 (5.5m × 2.7m)</li>
+                        <li>Dormitorio principal con baño en suite (5.5m × 5.5m)</li>
+                        <li>Baño completo (3.6m × 2.7m)</li>
+                        <li>Baño en suite integrado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-box">
+                <h4>✓ Diseño Coherente</h4>
+                <p>El plano interior respeta exactamente la distribución externa, incluyendo ubicación de ventanas y puertas.</p>
+            </div>
+            <div class="feature-box">
+                <h4>✓ Espacios Funcionales</h4>
+                <p>Distribución eficiente con áreas bien definidas para cada función del hogar.</p>
+            </div>
+            <div class="feature-box">
+                <h4>✓ Circulación Fluida</h4>
+                <p>Pasillos y accesos diseñados para facilitar el movimiento entre ambientes.</p>
+            </div>
+            <div class="feature-box">
+                <h4>✓ Privacidad</h4>
+                <p>Dormitorios separados de las áreas sociales, con suite principal independiente.</p>
+            </div>
+            <div class="feature-box">
+                <h4>✓ Iluminación Natural</h4>
+                <p>Múltiples ventanas estratégicamente ubicadas para maximizar la luz natural.</p>
+            </div>
+            <div class="feature-box">
+                <h4>✓ Estilo Moderno</h4>
+                <p>Diseño contemporáneo que combina funcionalidad con estética minimalista.</p>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Explora el Diseño</h2>
+            <p style="color: #ddd; margin-bottom: 30px; font-size: 1.1em;">
+                Descarga los archivos o visualiza el plano interactivo completo
+            </p>
+            <a href="visualizar-plano.html" class="btn">Ver Visualización Completa</a>
+            <a href="plano-interior.svg" class="btn btn-secondary" download>Descargar Plano SVG</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Home Designs - Diseño Arquitectónico</p>
+        <p>Plano interior creado para coincidir con la distribución exterior de la casa</p>
+        <div class="tech-stack">
+            <span class="tech-badge">SVG</span>
+            <span class="tech-badge">Diseño Responsivo</span>
+            <span class="tech-badge">HTML5</span>
+            <span class="tech-badge">Arquitectura</span>
+        </div>
+    </footer>
+</body>
+</html>
