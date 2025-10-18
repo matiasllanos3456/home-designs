@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Interior - Visualización</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+        
+        @media (min-width: 1200px) {
+            .content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+        
+        .floor-plan-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .floor-plan-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .floor-plan-container svg {
+            width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+        
+        .info-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .info-panel h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+        }
+        
+        .info-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .room-list {
+            list-style: none;
+        }
+        
+        .room-list li {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .room-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .room-name {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .room-size {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .features {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        .reference-image {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .reference-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .reference-image p {
+            margin-top: 10px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 Plano Interior de la Casa</h1>
+            <p>Diseño arquitectónico basado en la foto exterior</p>
+        </header>
+        
+        <div class="content">
+            <div class="floor-plan-container">
+                <h2>Plano de Distribución</h2>
+                <object data="plano-interior.svg" type="image/svg+xml" style="width: 100%; height: auto;">
+                    <img src="plano-interior.svg" alt="Plano Interior">
+                </object>
+                
+                <div class="reference-image">
+                    <h3>Referencia - Exterior de la Casa</h3>
+                    <img src="1760751150326.jpg" alt="Exterior de la casa">
+                    <p>Foto de referencia utilizada para el diseño del plano interior</p>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h2>Información del Proyecto</h2>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <span class="stat-number">180</span>
+                        <span class="stat-label">m² totales</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Dormitorios</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">Baños</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Garaje</span>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Distribución de Ambientes</h3>
+                    <ul class="room-list">
+                        <li>
+                            <span class="room-name">Garaje</span>
+                            <span class="room-size">5.5m × 5.5m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Sala de Estar</span>
+                            <span class="room-size">7.3m × 5.5m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Cocina y Comedor</span>
+                            <span class="room-size">7.3m × 5.5m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Dormitorio 1</span>
+                            <span class="room-size">5.5m × 5.5m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Dormitorio 2</span>
+                            <span class="room-size">5.5m × 2.7m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Dormitorio Principal (con baño en suite)</span>
+                            <span class="room-size">5.5m × 5.5m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Baño Principal</span>
+                            <span class="room-size">3.6m × 2.7m</span>
+                        </li>
+                        <li>
+                            <span class="room-name">Baño en Suite</span>
+                            <span class="room-size">Incorporado</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Características del Diseño</h3>
+                    <div class="features">
+                        <ul>
+                            <li>Diseño de una sola planta</li>
+                            <li>Entrada principal central</li>
+                            <li>Garaje con acceso interno</li>
+                            <li>Sala de estar amplia con ventanas frontales</li>
+                            <li>Cocina integrada con comedor</li>
+                            <li>Suite principal con baño privado</li>
+                            <li>Dos dormitorios adicionales</li>
+                            <li>Baño completo compartido</li>
+                            <li>Múltiples ventanas para luz natural</li>
+                            <li>Distribución eficiente de espacios</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Acabados Exteriores</h3>
+                    <div class="features">
+                        <ul>
+                            <li>Techo de tejas de terracota</li>
+                            <li>Paredes de estuco gris/beige</li>
+                            <li>Puerta principal de madera</li>
+                            <li>Ventanas modernas con marcos</li>
+                            <li>Diseño contemporáneo minimalista</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Home Designs - Plano Interior Arquitectónico</p>
+            <p>Diseñado para coincidir con la distribución exterior de la casa</p>
+        </footer>
+    </div>
+</body>
+</html>
